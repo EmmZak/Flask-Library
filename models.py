@@ -73,7 +73,18 @@ class Livre(db.Model):
         self.auteur = a
     def add_tag(self, tag):
         self.tags.append(tag)
+    def isTag(self, t):
+        return t in self.tags
+    def isAuteur(self, a):
+        return a.id == self.auteur.id   
     
+    def __init__(self, id=None, titre=None, date=None, auteur=None, tags=None):
+        self.id=id
+        self.titre=titre
+        self.date=date
+        self.auteur=auteur
+        self.tags=tags
+
     def __repr__(self):
         return f"\n[Livre {self.id, self.titre, self.date, self.auteur, self.tags}]\n"
 

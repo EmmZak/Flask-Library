@@ -67,6 +67,44 @@
 <br />
 <br />
 
+<form action="/?">
+  <input hidden type="text" name="elements" value="{{elements}}" >
+  <input hidden type="text" name="page" value="{{page}}" >
+  
+  <select name="sort" onchange="this.form.submit()">
+    <option {% if sort == "default": %} selected {% endif %} value="default"> 
+      Default
+    </option>
+    <option {% if sort == "asc": %} selected {% endif %}  value="asc"> 
+      Oldest
+    </option>
+    <option {% if sort == "desc": %} selected {% endif %}  value="desc"> 
+      Latest
+    </option>
+  </select>
+</form>
+
+<form action="/?" method="get">
+  <input hidden type="text" name="sort" value="{{sort}}" >
+  <input hidden type="text" name="page" value="{{page}}" >
+  <select name="elements" onchange="this.form.submit()">
+    {% for n in [2,4,10]:%}
+      <option value="{{n}}" {% if elements==n %} selected {% endif %} >{{n}}</option>
+    {% endfor %}
+  </select>
+
+<button type="button" onclick="location.href='/livre/edit'">
+  Create Livre
+</button>
+
+<button type="button" onclick="location.href='/?page={{prev}}&elements={{elements}}&sort={{sort}}'"> 
+  Prev 
+</button>
+Pages {{page}}/{{pages}}
+<button type="button" onclick="location.href='/?page={{next}}&elements={{elements}}&sort={{sort}}'"> 
+next
+</button>
+
 <table border="1" class="styled-table">
   <tr>
     <th>ID</th>

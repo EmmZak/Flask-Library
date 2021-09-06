@@ -34,32 +34,26 @@
 </style>
 
 <form action="/auteur/submit" method="post" name="auteur">
-  {% if auteur != None %}
-    ok
-  {% endif %} 
-  {{ auteur }}
   <input hidden name="id" value="{{auteur.id}}" />
 
   <table class="styled-table" border="1">
     <tr>
       <td>
-        Nom <input type="text" name="nom" value="{{auteur.nom}}" required /> <br />
+        Nom <input type="text" name="nom" value="{{auteur.nom}}" required />
+        <br />
       </td>
       <td>
         Prenom
-        <input type="text" name="prenom" value="{{auteur.prenom}}" required /> <br />
+        <input type="text" name="prenom" value="{{auteur.prenom}}" required />
+        <br />
       </td>
       <td>
-        <input type="submit" value="Submit" >
+        <input type="submit" value="Submit" />
       </td>
     </tr>
   </table>
 </form>
 
 <form>
-    <input 
-        type="button" 
-        value="Annuler"  
-        onclick="history.back()"
-    >
-   </form>
+  <input type="button" value="Annuler" onclick="history.back()" />
+</form>
