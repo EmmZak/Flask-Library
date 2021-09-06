@@ -1,7 +1,7 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
-
+from sqlalchemy import desc
 from models import db, Tag, Livre, Auteur, User
 
 bp = Blueprint('Main', __name__, url_prefix="/")
@@ -18,25 +18,17 @@ def get_prev_next(page, pages):
         next = page + 1
     return prev, next
 
+sort_options = {
+    'default': None,
+    'asc': Livre.date.asc(),
+    'desc': Livre.date.desc()
+}
+
 @bp.route('/')
 def index(elements=None):
     page = request.args.get('page', 1, type=int)
-    
-    elements = request.args.get('elements', None)
-    if elements:
-        elements = int(elements)
-    else:
-        elements = 2
-    """
-    page = request.args.get('page', None)
-    if page:
-        page = int(page)
-    else:
-        page = 1
-    """
-    sort = request.args.get('sort', None)
-    if not sort:
-        sort = "asc"
+    elements = request.args.get('elements', 2, type=int)
+    sort = request.args.get('sort', 'asc', type=str)
 
     pages = Livre.query.count() / elements 
     if not pages.is_integer():
@@ -44,9 +36,7 @@ def index(elements=None):
 
     prev, next = get_prev_next(page, pages)
 
-    print(page, elements)
-    livres = Livre.query.paginate(page=page, per_page=elements).items
-    print(livres, len(livres))
+    livres = Livre.query.order_by(sort_options.get(sort)).paginate(page=page, per_page=elements).items
 
     data = {
         'elements': elements,
