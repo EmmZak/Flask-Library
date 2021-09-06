@@ -1,0 +1,65 @@
+<style>
+  .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+  .styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+  }
+  .styled-table th,
+  .styled-table td {
+    padding: 12px 15px;
+  }
+  .styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+
+  .styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+
+  .styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+  }
+  .styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+  }
+</style>
+
+<form action="/auteur/submit" method="post" name="auteur">
+  {% if auteur != None %}
+    ok
+  {% endif %} 
+  {{ auteur }}
+  <input hidden name="id" value="{{auteur.id}}" />
+
+  <table class="styled-table" border="1">
+    <tr>
+      <td>
+        Nom <input type="text" name="nom" value="{{auteur.nom}}" required /> <br />
+      </td>
+      <td>
+        Prenom
+        <input type="text" name="prenom" value="{{auteur.prenom}}" required /> <br />
+      </td>
+      <td>
+        <input type="submit" value="Submit" >
+      </td>
+    </tr>
+  </table>
+</form>
+
+<form>
+    <input 
+        type="button" 
+        value="Annuler"  
+        onclick="history.back()"
+    >
+   </form>

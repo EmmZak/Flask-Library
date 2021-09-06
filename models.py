@@ -4,10 +4,7 @@ from datetime import datetime
 from sqlalchemy import desc
 from sqlalchemy.orm import backref
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost:5432/flask_library"
-db = SQLAlchemy(app)
-
+db = SQLAlchemy()
 
 class User(db.Model):
     __tablename__ = "users"
@@ -40,7 +37,8 @@ class Auteur(db.Model):
         lazy=True
     )
 
-    def __init__(self, nom, prenom):
+    def __init__(self, nom, prenom, id=None):
+        self.id = id
         self.nom = nom
         self.prenom = prenom
 
@@ -89,77 +87,3 @@ class Tag(db.Model):
     
     def __repr__(self):
         return f"[Tag {self.id, self.titre}]"
-
-db.drop_all()
-db.create_all()
-
-a = Auteur("Manu", "Zak")
-db.session.add(a)
-db.session.commit()
-
-a = Auteur.query.filter_by(nom="Manu").first()
-
-tags = [Tag(t) for t in ['Python', 'Love', 'Sound', "Religion", 'Time']]
-db.session.add_all(tags)
-
-tags = Tag.query.all()
-
-l1 = Livre(titre="book with tags")
-l1.date=datetime.now()
-l1.add_tag(tags[0])
-l1.add_tag(tags[2])
-
-l1.add_auteur(a)
-
-db.session.add(l1)
-db.session.commit()
-
-l1 = Livre(titre="book with nothing")
-l1.date=datetime.now()
-l1.add_tag(tags[2])
-
-l1.add_auteur(a)
-
-db.session.add(l1)
-db.session.commit()
-
-l = Livre.query.filter_by(id=1).first()
-print("l.id=1", l)
-"""
-l1 = Livre(titre="book with tags")
-l1.date=datetime.now()
-
-t = Tag('Python')
-l1.add_tag(t)
-t = Tag('Music')
-l1.add_tag(t)
-t = Tag('Love')
-l1.add_tag(t)
-"""
-
-#l1.add_auteur(a)
-
-#print(l1)
-"""
-l1 = Livre(titre="book with tags")
-l1.date=datetime.now()
-l2 = Livre(titre="book_99")
-l2.date=datetime.now()
-
-a1 = Auteur(nom="Ero", prenom="Zak")
-a1.livres.append(l1)
-a1.livres.append(l2)
-
-db.session.add(a1)
-
-db.session.commit()
-
-db.create_all()
-a2 = Auteur(nom="Miko", prenom="Zak")
-
-l1 = Livre(titre="final", auteur=a2)
-l1.date=datetime.now()
-
-db.session.add(a2)
-db.session.commit()
-"""
