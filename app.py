@@ -3,12 +3,15 @@ from controllers import user, livre, auteur, tag, main
 from flask_sqlalchemy import SQLAlchemy
 from models import db
 from database import config
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config.from_object('config')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_CONNECTION_URI
 db.init_app(app)
+
+migrate = Migrate(app, db)
 
 with app.app_context():
     db.create_all()
