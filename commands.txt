@@ -1,2 +1,4 @@
-docker-compose 2 services 
-	- db host is db service name
+Database is PostgreSQL running in a container
+
+Local backend -> host=0.0.0.0
+Docker backend -> db service name from docker-compose.yaml
