@@ -1,8 +1,10 @@
 import os
 
+LOCAL = True
+
 user = "postgres"
 password = "postgres"
-host = "postgres"
+host = "0.0.0.0" if LOCAL else "flask_library_docker"
 database = "flask_library"
 port = 5432
 

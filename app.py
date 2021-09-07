@@ -10,6 +10,9 @@ app.config.from_object('config')
 app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_CONNECTION_URI
 db.init_app(app)
 
+with app.app_context():
+    db.create_all()
+
 app.register_blueprint(main.bp, url_prefix='/')
 app.register_blueprint(user.bp, url_prefix='/user')
 app.register_blueprint(livre.bp, url_prefix='/livre')
