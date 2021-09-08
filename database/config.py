@@ -1,6 +1,6 @@
 import os
 
-LOCAL = False
+LOCAL = True
 
 user = "postgres"
 password = "postgres"
